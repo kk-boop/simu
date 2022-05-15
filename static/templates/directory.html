@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="data:;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=">
+  <title>SIMU - {{path}}</title>
+</head>
+<body>
+  <h1>Index of '{{path}}'</h1>
+  <ul>
+      {{#each entries}}
+      <li><a href="{{path}}{{this.name}}">{{this.name}}</a></li>
+      {{/each}}
+  </ul>
+</body>
+</html>

@@ -1,0 +1,42 @@
+[Unit]
+Description=SIMU application server
+After=network.target
+
+[Service]
+Type=simple
+PrivateTmp=true
+PrivateMounts=true
+ProtectControlGroups=true
+ProtectHome=read-only
+ProtectSystem=strict
+ProtectProc=invisible
+RestrictNamespaces=time user
+
+ReadWritePaths=/var/run/simu
+
+# Hardening the following settings may cause breakage with the SUID helper
+PrivateDevices=false
+ProtectKernelTunables=false
+ProtectKernelLogs=false
+ProtectKernelModules=false
+ProtectClock=false
+RestrictSUIDSGID=false
+RestrictRealtime=false
+
+
+User=www-data
+Group=www-data
+
+WorkingDirectory=/
+Environment=RUST_LOG=info
+Environment=SIMU_BIND="unix:/var/run/simu/simu.socket"
+Environment=SIMU_TEMPLATES="/usr/local/share/simu/templates"
+
+PermissionsStartOnly=true
+ExecStartPre=/usr/bin/install -o www-data -g www-data -d /var/run/simu
+
+Restart=on-failure
+ExecStart=/usr/local/bin/simu
+
+[Install]
+WantedBy=multi-user.target
